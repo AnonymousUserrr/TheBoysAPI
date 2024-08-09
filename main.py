@@ -72,70 +72,69 @@ async def get_episode_by_id(episode_id: int):
 ############################
 # Only for development use #
 ############################
-@app.post("/characters", status_code=status.HTTP_201_CREATED)
-async def upload_characters(character: TheBoys):
-    """Insert Characters into the database"""
+# @app.post("/characters", status_code=status.HTTP_201_CREATED)
+# async def upload_characters(character: TheBoys):
+#     """Insert Characters into the database"""
 
-    characters = TheBoys(name=character.name, full_name=character.full_name, description=character.description,
-                         image_url=character.image_url, actor_name=character.actor_name, gender=character.gender)
+#     characters = TheBoys(name=character.name, full_name=character.full_name, description=character.description,
+#                          image_url=character.image_url, actor_name=character.actor_name, gender=character.gender)
 
-    with Session(engine) as session:
-        session.add(characters)
-        session.commit()
-        return {"message": "Character created succesfully"}
-
-
-@app.put("/characters/{character_id}")
-async def update_character_info(character_id: int, character: TheBoys):
-    """Update character info by ID"""
-
-    with Session(engine) as session:
-        db_character = session.get(TheBoys, character_id)
-        if not db_character:
-            raise HTTPException(404, "Character not found")
-
-        character_data = character.model_dump(exclude_unset=True)
-        db_character.sqlmodel_update(character_data)
-        session.add(db_character)
-        session.commit()
-        session.refresh(db_character)
-    return db_character
+#     with Session(engine) as session:
+#         session.add(characters)
+#         session.commit()
+#         return {"message": "Character created succesfully"}
 
 
-@app.delete("/characters/{character_id}")
-async def delete_character(character_id: int):
-    """Delete character by ID"""
+# @app.put("/characters/{character_id}")
+# async def update_character_info(character_id: int, character: TheBoys):
+#     """Update character info by ID"""
 
-    with Session(engine) as session:
-        db_character = session.get(TheBoys, character_id)
-        if not db_character:
-            raise HTTPException(404, "Character not found")
+#     with Session(engine) as session:
+#         db_character = session.get(TheBoys, character_id)
+#         if not db_character:
+#             raise HTTPException(404, "Character not found")
 
-        session.delete(db_character)
-        session.commit()
-        return {"message": "Character deleted from db succesfully"}
+#         character_data = character.model_dump(exclude_unset=True)
+#         db_character.sqlmodel_update(character_data)
+#         session.add(db_character)
+#         session.commit()
+#         session.refresh(db_character)
+#     return db_character
 
-@app.post("/episodes", status_code=status.HTTP_201_CREATED)
-async def upload_episodes(ep_name: str, season: str, description: str):
-    """Insert Episodes into the database"""
+
+# @app.delete("/characters/{character_id}")
+# async def delete_character(character_id: int):
+#     """Delete character by ID"""
+
+#     with Session(engine) as session:
+#         db_character = session.get(TheBoys, character_id)
+#         if not db_character:
+#             raise HTTPException(404, "Character not found")
+
+#         session.delete(db_character)
+#         session.commit()
+#         return {"message": "Character deleted from db succesfully"}
+
+# @app.post("/episodes", status_code=status.HTTP_201_CREATED)
+# async def upload_episodes(ep_name: str, season: str, description: str):
+#     """Insert Episodes into the database"""
     
-    episodes = Episodes(ep_name=ep_name, season=season, description=description)
-    with Session(engine) as session:
-        session.add(episodes)
-        session.commit()
-        return {"message": "Episode created succesfully"}
+#     episodes = Episodes(ep_name=ep_name, season=season, description=description)
+#     with Session(engine) as session:
+#         session.add(episodes)
+#         session.commit()
+#         return {"message": "Episode created succesfully"}
 
-@app.delete("/episodes/{episode_id}")
-async def delete_episodes(episode_id: int):
-    """Delete episode by ID"""
+# @app.delete("/episodes/{episode_id}")
+# async def delete_episodes(episode_id: int):
+#     """Delete episode by ID"""
     
-    with Session(engine) as session:
-        db_episode = session.get(Episodes, episode_id)
-        if not db_episode:
-            raise HTTPException(404, "Episode not found")
+#     with Session(engine) as session:
+#         db_episode = session.get(Episodes, episode_id)
+#         if not db_episode:
+#             raise HTTPException(404, "Episode not found")
         
-        session.delete(db_episode)
-        session.commit()
+#         session.delete(db_episode)
+#         session.commit()
         
-        return {"message" : "Episode deleted from db succesfully"}
-    
+#         return {"message" : "Episode deleted from db succesfully"}
